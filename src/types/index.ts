@@ -11,7 +11,7 @@ export type SchemeType = "NFST" | "NOS" | "PreMatric" | "PostMatric";
 
 export type VerificationStatus = "Available" | "Missing" | "NeedsReview";
 
-export type UserRole = "student" | "institute" | "moTAAdmin";
+export type UserRole = "student" | "instituteNodal" | "moTAAdmin" | "institute";
 
 export interface EligibilityRules {
   category: string[];

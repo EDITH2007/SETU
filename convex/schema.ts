@@ -1,7 +1,29 @@
 import { defineSchema, defineTable } from "convex/server";
+import { authTables } from "@convex-dev/auth/server";
 import { v } from "convex/values";
 
 export default defineSchema({
+  ...authTables,
+  users: defineTable({
+    name: v.optional(v.string()),
+    image: v.optional(v.string()),
+    email: v.optional(v.string()),
+    emailVerificationTime: v.optional(v.number()),
+    phone: v.optional(v.string()),
+    phoneVerificationTime: v.optional(v.number()),
+    isAnonymous: v.optional(v.boolean()),
+    // Extended custom fields for SETU RBAC
+    role: v.optional(
+      v.union(
+        v.literal("student"),
+        v.literal("instituteNodal"),
+        v.literal("moTAAdmin")
+      )
+    ),
+    institute: v.optional(v.string()),
+    studentId: v.optional(v.string()),
+  }),
+
   schemes: defineTable({
     name: v.string(),
     code: v.string(), // "NFST" | "NOS" | "PreMatric" | "PostMatric"
@@ -30,6 +52,7 @@ export default defineSchema({
   applications: defineTable({
     applicationNumber: v.string(),
     studentId: v.string(),
+    userId: v.optional(v.string()),
     studentName: v.string(),
     studentEmail: v.string(),
     studentPhone: v.string(),
@@ -47,7 +70,7 @@ export default defineSchema({
       v.literal("FinalDecision")
     ),
     stageEnteredAt: v.string(),
-    stageDwellTimes: v.any(), // Record<string, number>
+    stageDwellTimes: v.any(),
     aiScore: v.number(),
     aiScoreReasoning: v.object({
       scoreBreakdown: v.array(
@@ -109,6 +132,7 @@ export default defineSchema({
     applicationId: v.string(),
     applicationNumber: v.string(),
     studentName: v.string(),
+    studentEmail: v.optional(v.string()),
     schemeName: v.string(),
     subject: v.string(),
     description: v.string(),
@@ -120,7 +144,7 @@ export default defineSchema({
       v.literal("Escalated"),
       v.literal("Resolved")
     ),
-    escalationLevel: v.number(), // 1 | 2 | 3
+    escalationLevel: v.number(),
     resolvedAt: v.optional(v.string()),
     resolutionNotes: v.optional(v.string()),
   }),
@@ -129,6 +153,7 @@ export default defineSchema({
     schemeId: v.string(),
     applicationId: v.string(),
     studentName: v.string(),
+    studentEmail: v.optional(v.string()),
     quarter: v.string(),
     amountReleased: v.number(),
     releasedAt: v.string(),
@@ -139,21 +164,5 @@ export default defineSchema({
       v.literal("Flagged")
     ),
     transactionRef: v.string(),
-  }),
-
-  users: defineTable({
-    name: v.string(),
-    email: v.string(),
-    role: v.union(
-      v.literal("student"),
-      v.literal("institute"),
-      v.literal("moTAAdmin")
-    ),
-    state: v.optional(v.string()),
-    profile: v.object({
-      phone: v.optional(v.string()),
-      state: v.optional(v.string()),
-      institution: v.optional(v.string()),
-    }),
   }),
 });

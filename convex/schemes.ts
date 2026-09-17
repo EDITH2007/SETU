@@ -1,9 +1,14 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { auth } from "./auth";
 
 export const getSchemes = query({
   args: {},
-  handler: async (ctx: any) => {
+  handler: async (ctx) => {
+    const userId = await auth.getUserId(ctx);
+    if (!userId) {
+      throw new Error("Unauthorized: Authentication required to view schemes");
+    }
     return await ctx.db.query("schemes").collect();
   },
 });
@@ -33,7 +38,15 @@ export const addScheme = mutation({
     selectionCriteria: v.string(),
     isActive: v.boolean(),
   },
-  handler: async (ctx: any, args: any) => {
+  handler: async (ctx, args) => {
+    const userId = await auth.getUserId(ctx);
+    if (!userId) {
+      throw new Error("Unauthorized: Authentication required");
+    }
+    const user = await ctx.db.get(userId);
+    if (!user || user.role !== "moTAAdmin") {
+      throw new Error("Forbidden: Only MoTA Admin can create scheme configurations");
+    }
     return await ctx.db.insert("schemes", args);
   },
 });

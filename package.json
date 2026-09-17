@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@convex-dev/auth": "^0.0.95",
     "clsx": "^2.1.1",
     "convex": "^1.46.0",
     "date-fns": "^4.4.0",

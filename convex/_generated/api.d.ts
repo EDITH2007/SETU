@@ -9,7 +9,13 @@
  */
 
 import type * as applications from "../applications.js";
+import type * as auth from "../auth.js";
+import type * as disbursements from "../disbursements.js";
+import type * as grievances from "../grievances.js";
+import type * as http from "../http.js";
 import type * as schemes from "../schemes.js";
+import type * as seed from "../seed.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -19,7 +25,13 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   applications: typeof applications;
+  auth: typeof auth;
+  disbursements: typeof disbursements;
+  grievances: typeof grievances;
+  http: typeof http;
   schemes: typeof schemes;
+  seed: typeof seed;
+  users: typeof users;
 }>;
 
 /**

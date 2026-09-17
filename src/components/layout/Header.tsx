@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { useAuthActions, useConvexAuth } from "@convex-dev/auth/react";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import { useSetu } from "@/context/SetuContext";
-import { UserRole } from "@/types";
 import {
   ShieldCheck,
   Bell,
@@ -12,18 +14,37 @@ import {
   Sliders,
   CheckCircle2,
   AlertTriangle,
-  FileText,
   X,
   Smartphone,
   Mail,
+  LogOut,
+  Sparkles,
 } from "lucide-react";
 
 export const Header: React.FC = () => {
-  const { role, setRole, notifications, markNotificationRead, resetToSeedData } = useSetu();
+  const { signOut } = useAuthActions();
+  const { isAuthenticated } = useConvexAuth();
+  const currentUser = useQuery(api.users.getCurrentUser);
+
+  const { notifications, markNotificationRead, resetToSeedData } = useSetu();
   const [showNotifs, setShowNotifs] = useState(false);
   const [activeSimulatedMsg, setActiveSimulatedMsg] = useState<any>(null);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
+
+  const getRoleLabel = (role?: string) => {
+    switch (role) {
+      case "moTAAdmin":
+        return { label: "MoTA Admin", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30", icon: Sliders };
+      case "instituteNodal":
+        return { label: "Institute Nodal", color: "bg-amber-500/20 text-amber-300 border-amber-500/30", icon: Building2 };
+      default:
+        return { label: "Student Applicant", color: "bg-blue-500/20 text-blue-300 border-blue-500/30", icon: User };
+    }
+  };
+
+  const roleInfo = getRoleLabel(currentUser?.role);
+  const RoleIcon = roleInfo.icon;
 
   return (
     <header className="bg-[#0F2C59] text-white border-b border-blue-900 shadow-md sticky top-0 z-40">
@@ -37,7 +58,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center space-x-4">
           <span className="text-slate-400 hidden md:inline">Accessibility Options</span>
           <span className="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded text-[11px] font-mono border border-amber-500/30">
-            DEMO ENVIRONMENT • STAGE 2.4
+            RBAC SECURED • STAGE 2.4
           </span>
         </div>
       </div>
@@ -54,8 +75,9 @@ export const Header: React.FC = () => {
               <h1 className="font-black text-xl tracking-tight text-white flex items-center gap-1.5">
                 SETU <span className="text-amber-400 font-hindi text-base font-normal">(सेतु)</span>
               </h1>
-              <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-500/30">
-                Puter.js AI Active
+              <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-emerald-400" />
+                Convex Auth & Puter.js AI
               </span>
             </div>
             <p className="text-xs text-slate-300 font-medium">
@@ -64,54 +86,49 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        {/* Dynamic Role Switcher & Header Controls */}
+        {/* User Status Badge & Auth Header Controls */}
         <div className="flex items-center space-x-3">
-          {/* Role Selector Pill */}
-          <div className="bg-[#1A3A6D] p-1 rounded-lg border border-blue-800 flex items-center space-x-1 shadow-inner">
-            <span className="text-xs text-slate-400 px-2 font-semibold hidden sm:inline">Role:</span>
-            
-            <button
-              onClick={() => setRole("student")}
-              className={`flex items-center space-x-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-                role === "student"
-                  ? "bg-amber-500 text-slate-950 shadow-sm"
-                  : "text-slate-300 hover:text-white hover:bg-blue-800/60"
-              }`}
-            >
-              <User className="w-3.5 h-3.5" />
-              <span>Applicant Portal</span>
-            </button>
+          {isAuthenticated && currentUser ? (
+            <>
+              {/* Read-Only Role & Identity Indicator */}
+              <div className="bg-[#1A3A6D] px-3 py-1.5 rounded-xl border border-blue-800 flex items-center space-x-2.5 shadow-inner">
+                <div className="w-7 h-7 bg-amber-500/20 text-amber-300 rounded-lg flex items-center justify-center border border-amber-500/30">
+                  <RoleIcon className="w-4 h-4" />
+                </div>
+                <div className="text-left hidden sm:block">
+                  <div className="text-xs font-bold text-white truncate max-w-[140px]">
+                    {currentUser.name || currentUser.email}
+                  </div>
+                  <div className="text-[10px] font-medium text-amber-300 flex items-center gap-1">
+                    <span>{roleInfo.label}</span>
+                  </div>
+                </div>
+                <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md border ${roleInfo.color} sm:hidden`}>
+                  {roleInfo.label}
+                </span>
+              </div>
 
-            <button
-              onClick={() => setRole("moTAAdmin")}
-              className={`flex items-center space-x-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-                role === "moTAAdmin"
-                  ? "bg-amber-500 text-slate-950 shadow-sm"
-                  : "text-slate-300 hover:text-white hover:bg-blue-800/60"
-              }`}
-            >
-              <Sliders className="w-3.5 h-3.5" />
-              <span>MoTA Admin Portal</span>
-            </button>
-
-            <button
-              onClick={() => setRole("institute")}
-              className={`flex items-center space-x-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
-                role === "institute"
-                  ? "bg-amber-500 text-slate-950 shadow-sm"
-                  : "text-slate-300 hover:text-white hover:bg-blue-800/60"
-              }`}
-            >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>Institute Nodal</span>
-            </button>
-          </div>
+              {/* Sign Out Button */}
+              <button
+                onClick={() => signOut()}
+                className="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold transition-all flex items-center space-x-1.5"
+                title="Sign Out"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Sign Out</span>
+              </button>
+            </>
+          ) : (
+            <div className="text-xs text-slate-400 font-mono">
+              Unauthenticated Session
+            </div>
+          )}
 
           {/* Notifications Bell */}
           <div className="relative">
             <button
               onClick={() => setShowNotifs(!showNotifs)}
-              className="p-2 rounded-lg bg-[#1A3A6D] border border-blue-800 hover:bg-blue-800 text-slate-200 hover:text-white relative transition-all"
+              className="p-2 rounded-xl bg-[#1A3A6D] border border-blue-800 hover:bg-blue-800 text-slate-200 hover:text-white relative transition-all"
               title="Notifications"
             >
               <Bell className="w-4 h-4" />
@@ -182,7 +199,7 @@ export const Header: React.FC = () => {
                 resetToSeedData();
               }
             }}
-            className="p-2 rounded-lg bg-[#1A3A6D] border border-blue-800 hover:bg-rose-900/60 hover:border-rose-700 text-slate-300 hover:text-rose-200 transition-all flex items-center space-x-1 text-xs"
+            className="p-2 rounded-xl bg-[#1A3A6D] border border-blue-800 hover:bg-rose-900/60 hover:border-rose-700 text-slate-300 hover:text-rose-200 transition-all flex items-center space-x-1 text-xs"
             title="Reset Demo Dataset"
           >
             <RotateCcw className="w-3.5 h-3.5" />
