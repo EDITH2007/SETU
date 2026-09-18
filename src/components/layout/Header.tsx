@@ -35,11 +35,11 @@ export const Header: React.FC = () => {
   const getRoleLabel = (role?: string) => {
     switch (role) {
       case "moTAAdmin":
-        return { label: "MoTA Admin", color: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30", icon: Sliders };
+        return { label: "MoTA Admin", color: "bg-emerald-50 text-emerald-800 border-emerald-300", icon: Sliders };
       case "instituteNodal":
-        return { label: "Institute Nodal", color: "bg-amber-500/20 text-amber-300 border-amber-500/30", icon: Building2 };
+        return { label: "Institute Nodal", color: "bg-amber-50 text-amber-900 border-amber-300", icon: Building2 };
       default:
-        return { label: "Student Applicant", color: "bg-blue-500/20 text-blue-300 border-blue-500/30", icon: User };
+        return { label: "Student Applicant", color: "bg-indigo-50 text-indigo-900 border-indigo-300", icon: User };
     }
   };
 
@@ -47,17 +47,16 @@ export const Header: React.FC = () => {
   const RoleIcon = roleInfo.icon;
 
   return (
-    <header className="bg-[#0F2C59] text-white border-b border-blue-900 shadow-md sticky top-0 z-40">
+    <header className="bg-[#FAF8F3]/95 text-stone-900 border-b border-[#E7E2D7] sticky top-0 z-40 backdrop-blur-md shadow-xs">
       {/* Top Govt Bar */}
-      <div className="bg-[#0A1E3F] text-xs py-1 px-4 text-slate-300 flex justify-between items-center border-b border-blue-900/50">
-        <div className="flex items-center space-x-3">
-          <span className="font-semibold text-amber-400">भारत सरकार | Government of India</span>
-          <span className="text-slate-500">|</span>
-          <span>जनजातीय कार्य मंत्रालय | Ministry of Tribal Affairs (MoTA)</span>
+      <div className="bg-[#F0ECE1] text-xs py-1.5 px-4 text-stone-700 flex justify-between items-center border-b border-[#E2DDD0]">
+        <div className="flex items-center space-x-3 text-[11px] font-medium">
+          <span className="font-bold text-[#C58B2B] tracking-wide">भारत सरकार | Government of India</span>
+          <span className="text-stone-400">|</span>
+          <span className="text-stone-800 font-semibold">जनजातीय कार्य मंत्रालय | Ministry of Tribal Affairs (MoTA)</span>
         </div>
-        <div className="flex items-center space-x-4">
-          <span className="text-slate-400 hidden md:inline">Accessibility Options</span>
-          <span className="bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded text-[11px] font-mono border border-amber-500/30">
+        <div className="flex items-center space-x-3">
+          <span className="bg-amber-100/80 text-amber-900 px-2.5 py-0.5 rounded text-[10px] font-mono border border-amber-300/80 tracking-wider font-semibold">
             RBAC SECURED • STAGE 2.4
           </span>
         </div>
@@ -66,21 +65,21 @@ export const Header: React.FC = () => {
       {/* Main Header Nav */}
       <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
         {/* Brand */}
-        <div className="flex items-center space-x-3">
-          <div className="bg-amber-500 p-2 rounded-lg text-slate-950 font-bold flex items-center justify-center shadow-inner">
-            <ShieldCheck className="w-6 h-6" />
+        <div className="flex items-center space-x-3.5">
+          <div className="bg-[#1E2B37] p-2 rounded-xl text-amber-400 font-bold flex items-center justify-center shadow-xs">
+            <ShieldCheck className="w-6 h-6 text-[#C58B2B]" />
           </div>
           <div>
-            <div className="flex items-center space-x-2">
-              <h1 className="font-black text-xl tracking-tight text-white flex items-center gap-1.5">
-                SETU <span className="text-amber-400 font-hindi text-base font-normal">(सेतु)</span>
+            <div className="flex items-center space-x-2.5">
+              <h1 className="font-display font-black text-2xl tracking-tight text-[#1E2B37] flex items-center gap-1.5">
+                SETU <span className="text-[#C58B2B] font-hindi text-lg font-normal">(सेतु)</span>
               </h1>
-              <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-emerald-400" />
+              <span className="bg-emerald-50 text-emerald-800 text-[10px] font-semibold px-2.5 py-0.5 rounded-full border border-emerald-300 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-emerald-700" />
                 Convex Auth & Puter.js AI
               </span>
             </div>
-            <p className="text-xs text-slate-300 font-medium">
+            <p className="text-[11px] text-stone-600 font-medium tracking-wide">
               Scholarship Empowerment & Transparent Utilization Platform
             </p>
           </div>
@@ -91,15 +90,15 @@ export const Header: React.FC = () => {
           {isAuthenticated && currentUser ? (
             <>
               {/* Read-Only Role & Identity Indicator */}
-              <div className="bg-[#1A3A6D] px-3 py-1.5 rounded-xl border border-blue-800 flex items-center space-x-2.5 shadow-inner">
-                <div className="w-7 h-7 bg-amber-500/20 text-amber-300 rounded-lg flex items-center justify-center border border-amber-500/30">
+              <div className="bg-white px-3.5 py-1.5 rounded-xl border border-[#E2DDD0] flex items-center space-x-2.5 shadow-xs">
+                <div className="w-7 h-7 bg-amber-50 text-[#C58B2B] rounded-lg flex items-center justify-center border border-amber-200">
                   <RoleIcon className="w-4 h-4" />
                 </div>
                 <div className="text-left hidden sm:block">
-                  <div className="text-xs font-bold text-white truncate max-w-[140px]">
+                  <div className="text-xs font-bold text-stone-900 truncate max-w-[140px]">
                     {currentUser.name || currentUser.email}
                   </div>
-                  <div className="text-[10px] font-medium text-amber-300 flex items-center gap-1">
+                  <div className="text-[10px] font-bold text-[#C58B2B] flex items-center gap-1">
                     <span>{roleInfo.label}</span>
                   </div>
                 </div>
@@ -111,7 +110,7 @@ export const Header: React.FC = () => {
               {/* Sign Out Button */}
               <button
                 onClick={() => signOut()}
-                className="px-3 py-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold transition-all flex items-center space-x-1.5"
+                className="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 text-xs font-bold transition-all flex items-center space-x-1.5 cursor-pointer shadow-xs"
                 title="Sign Out"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -119,7 +118,7 @@ export const Header: React.FC = () => {
               </button>
             </>
           ) : (
-            <div className="text-xs text-slate-400 font-mono">
+            <div className="text-xs text-stone-600 font-mono bg-stone-100 px-3 py-1.5 rounded-xl border border-stone-300">
               Unauthenticated Session
             </div>
           )}
@@ -128,12 +127,12 @@ export const Header: React.FC = () => {
           <div className="relative">
             <button
               onClick={() => setShowNotifs(!showNotifs)}
-              className="p-2 rounded-xl bg-[#1A3A6D] border border-blue-800 hover:bg-blue-800 text-slate-200 hover:text-white relative transition-all"
+              className="p-2 rounded-xl bg-white border border-[#E2DDD0] hover:bg-stone-100 text-stone-700 hover:text-stone-900 relative transition-all cursor-pointer shadow-xs"
               title="Notifications"
             >
               <Bell className="w-4 h-4" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
+                <span className="absolute -top-1 -right-1 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
                   {unreadCount}
                 </span>
               )}
@@ -141,18 +140,18 @@ export const Header: React.FC = () => {
 
             {/* Notification Drawer */}
             {showNotifs && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl z-50 text-slate-100 overflow-hidden">
-                <div className="p-3 bg-slate-950 border-b border-slate-800 flex justify-between items-center">
+              <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-stone-200 rounded-2xl shadow-2xl z-50 text-stone-900 overflow-hidden">
+                <div className="p-3.5 bg-stone-50 border-b border-stone-200 flex justify-between items-center">
                   <div className="flex items-center space-x-2">
-                    <Bell className="w-4 h-4 text-amber-400" />
-                    <span className="font-semibold text-sm">Notifications & Alerts</span>
+                    <Bell className="w-4 h-4 text-[#C58B2B]" />
+                    <span className="font-bold text-xs uppercase tracking-wider text-stone-900">Notifications & Alerts</span>
                   </div>
-                  <span className="text-xs text-slate-400 font-mono">{notifications.length} Total</span>
+                  <span className="text-xs text-stone-500 font-mono">{notifications.length} Total</span>
                 </div>
 
-                <div className="max-h-80 overflow-y-auto divide-y divide-slate-800/60">
+                <div className="max-h-80 overflow-y-auto divide-y divide-stone-100">
                   {notifications.length === 0 ? (
-                    <div className="p-6 text-center text-xs text-slate-400">No notifications yet.</div>
+                    <div className="p-6 text-center text-xs text-stone-500">No notifications yet.</div>
                   ) : (
                     notifications.map((n) => (
                       <div
@@ -161,27 +160,27 @@ export const Header: React.FC = () => {
                           markNotificationRead(n.id);
                           if (n.simulatedDelivery) setActiveSimulatedMsg(n);
                         }}
-                        className={`p-3 text-xs hover:bg-slate-800/80 cursor-pointer transition-colors ${
-                          !n.read ? "bg-blue-950/40 font-medium" : "text-slate-300"
+                        className={`p-3.5 text-xs hover:bg-stone-50 cursor-pointer transition-colors ${
+                          !n.read ? "bg-amber-50/60 font-medium" : "text-stone-700"
                         }`}
                       >
                         <div className="flex justify-between items-start mb-1">
-                          <span className="font-bold text-amber-300 flex items-center gap-1">
-                            {n.type === "deficiency" && <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />}
-                            {n.type === "status_change" && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />}
+                          <span className="font-bold text-stone-900 flex items-center gap-1">
+                            {n.type === "deficiency" && <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />}
+                            {n.type === "status_change" && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />}
                             {n.title}
                           </span>
-                          <span className="text-[10px] text-slate-400">
+                          <span className="text-[10px] text-stone-400">
                             {new Date(n.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                           </span>
                         </div>
-                        <p className="text-slate-300 text-[11px] leading-relaxed mb-1.5">{n.message}</p>
+                        <p className="text-stone-600 text-[11px] leading-relaxed mb-1.5">{n.message}</p>
 
                         {n.simulatedDelivery && (
-                          <div className="flex items-center space-x-2 text-[10px] text-slate-400 bg-slate-950/70 p-1.5 rounded border border-slate-800">
-                            <Smartphone className="w-3 h-3 text-emerald-400" />
+                          <div className="flex items-center space-x-2 text-[10px] text-stone-600 bg-stone-50 p-1.5 rounded-lg border border-stone-200">
+                            <Smartphone className="w-3 h-3 text-emerald-700" />
                             <span>Simulated SMS/Email Sent</span>
-                            <span className="text-amber-400 font-semibold underline ml-auto">Preview →</span>
+                            <span className="text-[#C58B2B] font-semibold underline ml-auto">Preview →</span>
                           </div>
                         )}
                       </div>
@@ -199,57 +198,57 @@ export const Header: React.FC = () => {
                 resetToSeedData();
               }
             }}
-            className="p-2 rounded-xl bg-[#1A3A6D] border border-blue-800 hover:bg-rose-900/60 hover:border-rose-700 text-slate-300 hover:text-rose-200 transition-all flex items-center space-x-1 text-xs"
+            className="p-2 rounded-xl bg-white border border-[#E2DDD0] hover:bg-rose-50 hover:border-rose-300 text-stone-700 hover:text-rose-800 transition-all flex items-center space-x-1.5 text-xs cursor-pointer shadow-xs"
             title="Reset all platform data (applications, schemes, grievances, and disbursements)"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span className="hidden xl:inline text-[11px]">Reset All Data</span>
+            <RotateCcw className="w-3.5 h-3.5 text-stone-500" />
+            <span className="hidden xl:inline text-[11px] font-semibold">Reset All Data</span>
           </button>
         </div>
       </div>
 
       {/* Simulated SMS / Email Preview Modal */}
       {activeSimulatedMsg && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-5 shadow-2xl text-slate-100 relative">
+        <div className="fixed inset-0 bg-stone-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white border border-stone-200 rounded-3xl max-w-md w-full p-6 shadow-2xl text-stone-900 relative">
             <button
               onClick={() => setActiveSimulatedMsg(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+              className="absolute top-5 right-5 text-stone-400 hover:text-stone-700"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="flex items-center space-x-2 text-amber-400 font-bold mb-3 border-b border-slate-800 pb-3">
-              <Smartphone className="w-5 h-5" />
+            <div className="flex items-center space-x-2 text-[#C58B2B] font-bold mb-4 border-b border-stone-200 pb-3">
+              <Smartphone className="w-5 h-5 text-[#C58B2B]" />
               <span>Simulated Dispatch Log (Govt SMS Gateway & Email)</span>
             </div>
 
             <div className="space-y-4">
-              <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs">
-                <div className="flex items-center space-x-2 text-emerald-400 font-semibold mb-2">
-                  <Mail className="w-4 h-4" />
+              <div className="bg-stone-50 p-4 rounded-2xl border border-stone-200 text-xs">
+                <div className="flex items-center space-x-2 text-emerald-800 font-semibold mb-2">
+                  <Mail className="w-4 h-4 text-emerald-700" />
                   <span>Email Dispatch (Simulated Adapter)</span>
                 </div>
-                <div className="text-slate-400 font-mono text-[11px]">
+                <div className="text-stone-600 font-mono text-[11px]">
                   <div>To: {activeSimulatedMsg.recipientId}@student.gov.in</div>
                   <div>Subject: {activeSimulatedMsg.title}</div>
-                  <div className="mt-2 text-slate-200 font-sans leading-relaxed">
+                  <div className="mt-2 text-stone-800 font-sans leading-relaxed">
                     {activeSimulatedMsg.message}
                   </div>
                 </div>
               </div>
 
-              <div className="bg-slate-950 p-3.5 rounded-xl border border-slate-800 text-xs">
-                <div className="flex items-center space-x-2 text-amber-400 font-semibold mb-2">
-                  <Smartphone className="w-4 h-4" />
+              <div className="bg-stone-50 p-4 rounded-2xl border border-stone-200 text-xs">
+                <div className="flex items-center space-x-2 text-amber-800 font-semibold mb-2">
+                  <Smartphone className="w-4 h-4 text-amber-700" />
                   <span>SMS Dispatch (mSeva NIC Gateway)</span>
                 </div>
-                <div className="bg-emerald-950/40 p-2.5 rounded border border-emerald-800/50 font-mono text-[11px] text-emerald-300">
+                <div className="bg-emerald-50 p-3 rounded-xl border border-emerald-200 font-mono text-[11px] text-emerald-900 leading-relaxed">
                   {activeSimulatedMsg.simulatedDelivery?.smsText || activeSimulatedMsg.message}
                 </div>
               </div>
 
-              <div className="text-[11px] text-slate-400 bg-slate-800/40 p-2.5 rounded-lg border border-slate-700">
+              <div className="text-[11px] text-stone-600 bg-amber-50/60 p-3 rounded-xl border border-amber-200">
                 💡 <strong>Production Adapter Note:</strong> Connects to NIC Mobile Seva SMS Gateway API and CDAC e-Mail Service API in live deployment.
               </div>
             </div>
@@ -259,3 +258,4 @@ export const Header: React.FC = () => {
     </header>
   );
 };
+

@@ -5,7 +5,7 @@ import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { AuthScreen } from "./AuthScreen";
 import { UserRole } from "@/types";
-import { ShieldAlert, ArrowRight } from "lucide-react";
+import { ShieldAlert, ArrowRight, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 
 interface RouteGuardProps {
@@ -19,10 +19,22 @@ export const RouteGuard: React.FC<RouteGuardProps> = ({ children, allowedRoles }
 
   if (isLoading || (isAuthenticated && currentUser === undefined)) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center p-6 space-y-4">
-        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
-        <div className="text-xs font-semibold text-slate-400 tracking-wider font-mono">
-          VERIFYING SETU SECURITY CREDENTIALS...
+      <div className="max-w-4xl mx-auto my-12 p-8 space-y-6">
+        <div className="flex items-center space-x-3 justify-center text-[#C58B2B]">
+          <ShieldCheck className="w-6 h-6 animate-pulse" />
+          <span className="font-mono text-xs tracking-wider uppercase font-bold text-stone-700">
+            VERIFYING SETU SECURITY CREDENTIALS...
+          </span>
+        </div>
+
+        {/* Skeleton Grid */}
+        <div className="space-y-4">
+          <div className="h-28 bg-white rounded-3xl border border-stone-200 animate-shimmer shadow-xs" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="h-32 bg-white rounded-2xl border border-stone-200 animate-shimmer shadow-xs" />
+            <div className="h-32 bg-white rounded-2xl border border-stone-200 animate-shimmer shadow-xs" />
+            <div className="h-32 bg-white rounded-2xl border border-stone-200 animate-shimmer shadow-xs" />
+          </div>
         </div>
       </div>
     );
@@ -45,19 +57,19 @@ export const RouteGuard: React.FC<RouteGuardProps> = ({ children, allowedRoles }
           : "/applicant";
 
       return (
-        <div className="max-w-xl mx-auto my-16 p-8 bg-slate-900 border border-slate-800 rounded-3xl text-center space-y-4 shadow-2xl">
-          <div className="inline-flex p-3 bg-rose-500/10 text-rose-400 rounded-2xl border border-rose-500/20">
+        <div className="max-w-xl mx-auto my-16 p-8 bg-white border border-[#E7E2D7] rounded-3xl text-center space-y-4 shadow-xl">
+          <div className="inline-flex p-3.5 bg-rose-50 text-rose-700 rounded-2xl border border-rose-200">
             <ShieldAlert className="w-8 h-8" />
           </div>
-          <h2 className="text-xl font-extrabold text-white">Access Restricted</h2>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Your authenticated account (<strong className="text-white">{currentUser.email}</strong>) has the role of{" "}
-            <strong className="text-amber-400 font-mono">{currentUser.role}</strong>. You are not authorized to view this page.
+          <h2 className="font-display text-xl font-bold text-stone-900">Access Restricted</h2>
+          <p className="text-xs text-stone-600 leading-relaxed max-w-md mx-auto">
+            Your authenticated account (<strong className="text-stone-900">{currentUser.email}</strong>) has the role of{" "}
+            <strong className="text-[#C58B2B] font-mono">{currentUser.role}</strong>. You are not authorized to view this page.
           </p>
           <div className="pt-2">
             <Link
               href={targetRoute}
-              className="inline-flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs transition-all"
+              className="inline-flex items-center space-x-2 bg-[#1E2B37] hover:bg-[#121B24] text-white font-bold px-5 py-2.5 rounded-xl text-xs transition-all shadow-md"
             >
               <span>Go to Authorized Portal ({userRole})</span>
               <ArrowRight className="w-4 h-4" />
@@ -70,3 +82,4 @@ export const RouteGuard: React.FC<RouteGuardProps> = ({ children, allowedRoles }
 
   return <>{children}</>;
 };
+

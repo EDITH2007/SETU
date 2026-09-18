@@ -41,19 +41,19 @@ export const AdminPortal: React.FC = () => {
   ).length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8 text-slate-100">
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-6 sm:space-y-8 text-stone-900">
       {/* Admin Top Header Banner */}
-      <div className="bg-gradient-to-r from-[#0F2C59] via-[#1A3A6D] to-[#0A1E3F] rounded-3xl p-6 sm:p-8 border border-blue-900/60 shadow-2xl space-y-4 relative overflow-hidden">
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E7E2D7] shadow-md space-y-5 relative overflow-hidden">
         <div className="flex flex-wrap justify-between items-center gap-4">
           <div>
-            <div className="inline-flex items-center space-x-2 bg-amber-500/20 text-amber-300 text-xs px-3 py-1 rounded-full border border-amber-500/30 mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center space-x-2 bg-amber-50 text-amber-900 text-xs px-3 py-1 rounded-full border border-amber-300 mb-2 font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-[#C58B2B]" />
               <span>Ministry of Tribal Affairs Executive Command Center</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              MoTA Administrative Control Portal <span className="font-hindi text-amber-400 font-normal">(सेतु)</span>
+            <h2 className="font-display text-2xl sm:text-4xl font-black text-stone-900 tracking-tight">
+              MoTA Administrative Control Portal <span className="font-hindi text-[#C58B2B] font-normal">(सेतु)</span>
             </h2>
-            <p className="text-slate-300 text-xs sm:text-sm">
+            <p className="text-stone-600 text-xs sm:text-sm max-w-2xl mt-1 leading-relaxed">
               Glass-box deterministic eligibility evaluation, Puter.js AI OCR intelligence, and real-time bottleneck radar.
             </p>
           </div>
@@ -71,64 +71,64 @@ export const AdminPortal: React.FC = () => {
         </div>
 
         {/* Tab Navigation Controls */}
-        <div className="pt-2 flex flex-wrap gap-2 border-t border-blue-900/60 font-semibold text-xs">
+        <div className="pt-3 flex flex-wrap gap-2 border-t border-stone-200 font-semibold text-xs">
           <button
             onClick={() => setActiveTab("dashboard")}
-            className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all ${
+            className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
               activeTab === "dashboard"
-                ? "bg-amber-500 text-slate-950 font-bold shadow-lg"
-                : "bg-slate-950/60 text-slate-300 hover:bg-blue-900/40"
+                ? "bg-[#1E2B37] text-white font-bold shadow-xs"
+                : "bg-[#FAF8F5] text-stone-700 hover:bg-stone-100 border border-stone-200"
             }`}
           >
-            <BarChart3 className="w-4 h-4" />
+            <BarChart3 className="w-4 h-4 text-amber-400" />
             <span>Dashboard & Analytics</span>
           </button>
 
           <button
             onClick={() => setActiveTab("scrutiny")}
-            className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all ${
+            className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
               activeTab === "scrutiny"
-                ? "bg-amber-500 text-slate-950 font-bold shadow-lg"
-                : "bg-slate-950/60 text-slate-300 hover:bg-blue-900/40"
+                ? "bg-[#1E2B37] text-white font-bold shadow-xs"
+                : "bg-[#FAF8F5] text-stone-700 hover:bg-stone-100 border border-stone-200"
             }`}
           >
-            <FileCheck className="w-4 h-4" />
+            <FileCheck className="w-4 h-4 text-amber-400" />
             <span>Scrutiny Workbench ({totalApps})</span>
           </button>
 
           <button
             onClick={() => setActiveTab("schemes")}
-            className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all ${
+            className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
               activeTab === "schemes"
-                ? "bg-amber-500 text-slate-950 font-bold shadow-lg"
-                : "bg-slate-950/60 text-slate-300 hover:bg-blue-900/40"
+                ? "bg-[#1E2B37] text-white font-bold shadow-xs"
+                : "bg-[#FAF8F5] text-stone-700 hover:bg-stone-100 border border-stone-200"
             }`}
           >
-            <Sliders className="w-4 h-4" />
+            <Sliders className="w-4 h-4 text-amber-400" />
             <span>Scheme Rule Engine ({schemes.length})</span>
           </button>
 
           <button
             onClick={() => setActiveTab("grievances")}
-            className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all relative ${
+            className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all relative cursor-pointer ${
               activeTab === "grievances"
-                ? "bg-amber-500 text-slate-950 font-bold shadow-lg"
-                : "bg-slate-950/60 text-slate-300 hover:bg-blue-900/40"
+                ? "bg-[#1E2B37] text-white font-bold shadow-xs"
+                : "bg-[#FAF8F5] text-stone-700 hover:bg-stone-100 border border-stone-200"
             }`}
           >
-            <HelpCircle className="w-4 h-4" />
+            <HelpCircle className="w-4 h-4 text-amber-400" />
             <span>Grievance Desk ({grievances.length})</span>
             {grievances.some((g) => g.status === "Escalated") && (
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping absolute top-1 right-1"></span>
+              <span className="w-2 h-2 rounded-full bg-rose-600 animate-ping absolute top-1 right-1"></span>
             )}
           </button>
 
           <button
             onClick={() => setActiveTab("fundpulse")}
-            className={`flex items-center space-x-1.5 px-4 py-2.5 rounded-xl transition-all ${
+            className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all cursor-pointer ${
               activeTab === "fundpulse"
-                ? "bg-amber-500 text-slate-950 font-bold shadow-lg"
-                : "bg-slate-950/60 text-slate-300 hover:bg-blue-900/40"
+                ? "bg-[#1E2B37] text-white font-bold shadow-xs"
+                : "bg-[#FAF8F5] text-stone-700 hover:bg-stone-100 border border-stone-200"
             }`}
           >
             <Flame className="w-4 h-4 text-amber-400" />
@@ -137,49 +137,49 @@ export const AdminPortal: React.FC = () => {
         </div>
       </div>
 
-      {/* Standard KPI Cards (Rendered across Dashboard & Overview) */}
+      {/* Standard KPI Summary Bar */}
       {activeTab === "dashboard" && (
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-xs">
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-1 shadow-lg">
-            <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3.5 text-xs">
+          <div className="bg-white border border-[#E7E2D7] p-4.5 rounded-2xl space-y-1 shadow-xs">
+            <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
               Total Applications
             </span>
-            <div className="text-2xl font-black text-white font-mono">{totalApps}</div>
-            <span className="text-[10px] text-slate-500">Across 10 ST States</span>
+            <div className="font-display text-3xl font-black text-stone-900 font-mono">{totalApps}</div>
+            <span className="text-[10px] text-stone-500">Across 10 ST States</span>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-1 shadow-lg">
-            <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+          <div className="bg-white border border-[#E7E2D7] p-4.5 rounded-2xl space-y-1 shadow-xs">
+            <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
               Eligible Fit (&gt;75)
             </span>
-            <div className="text-2xl font-black text-emerald-400 font-mono">
+            <div className="font-display text-3xl font-black text-emerald-700 font-mono">
               {eligibleCount} <span className="text-xs font-normal">({Math.round((eligibleCount / totalApps) * 100)}%)</span>
             </div>
-            <span className="text-[10px] text-emerald-400 font-semibold">Deterministic Verified</span>
+            <span className="text-[10px] text-emerald-800 font-semibold">Deterministic Verified</span>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-1 shadow-lg">
-            <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+          <div className="bg-white border border-[#E7E2D7] p-4.5 rounded-2xl space-y-1 shadow-xs">
+            <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
               Under Scrutiny
             </span>
-            <div className="text-2xl font-black text-amber-400 font-mono">{UnderVerificationCount}</div>
-            <span className="text-[10px] text-slate-400">Document Audit Active</span>
+            <div className="font-display text-3xl font-black text-amber-800 font-mono">{UnderVerificationCount}</div>
+            <span className="text-[10px] text-stone-500">Document Audit Active</span>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-1 shadow-lg">
-            <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+          <div className="bg-white border border-[#E7E2D7] p-4.5 rounded-2xl space-y-1 shadow-xs">
+            <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
               Deficiencies Flagged
             </span>
-            <div className="text-2xl font-black text-rose-400 font-mono">{deficientCount}</div>
-            <span className="text-[10px] text-rose-400 font-semibold">Puter AI English & Hindi</span>
+            <div className="font-display text-3xl font-black text-rose-700 font-mono">{deficientCount}</div>
+            <span className="text-[10px] text-rose-800 font-semibold">Puter AI English & Hindi</span>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 p-4 rounded-2xl space-y-1 shadow-lg col-span-2 sm:col-span-1">
-            <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+          <div className="bg-white border border-[#E7E2D7] p-4.5 rounded-2xl space-y-1 shadow-xs col-span-2 sm:col-span-1">
+            <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
               Final Sanctions
             </span>
-            <div className="text-2xl font-black text-blue-400 font-mono">{selectedCount}</div>
-            <span className="text-[10px] text-slate-400">Selected & Disbursed</span>
+            <div className="font-display text-3xl font-black text-indigo-900 font-mono">{selectedCount}</div>
+            <span className="text-[10px] text-stone-500">Selected & Disbursed</span>
           </div>
         </div>
       )}
@@ -201,3 +201,4 @@ export const AdminPortal: React.FC = () => {
     </div>
   );
 };
+

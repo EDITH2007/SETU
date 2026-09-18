@@ -141,7 +141,6 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
     const existingApp = applications.find((a) => a.id === appId || a.studentId === appId);
     const sampleDisb = schemeDisbursements.find((d) => d.applicationId === appId);
 
-    // Requirement 1: Ensure simulation entries NEVER reuse real applicant names like "Birsa Munda"
     let simName = sampleDisb?.studentName || "[SIMULATION] High-Burn Test Fellow";
     if (
       simName.toLowerCase().includes("birsa") ||
@@ -252,7 +251,6 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
     }
   };
 
-  // Fix 1: Attach test simulation disbursement to a clearly labeled fellow (" [SIMULATION] High-Burn Test Fellow")
   const handleSimulateHighBurnRate = async () => {
     try {
       await releaseDisbursementMutation({
@@ -261,14 +259,13 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
         studentName: "[SIMULATION] High-Burn Test Fellow",
         studentEmail: "simulation.test@mota.gov.in",
         quarter: "Q1 FY26 Accelerated Allocation",
-        amountReleased: 315000000, // ₹31.5 Crore simulated allocation to trigger early exhaustion forecast
+        amountReleased: 315000000,
       });
     } catch (err) {
       console.error("Failed to seed high burn rate disbursement:", err);
     }
   };
 
-  // Requirement 4: Reset Baseline Data action (specifically Disbursements scope)
   const handleResetData = async () => {
     try {
       await resetDisbursementsMutation({ initialDisbursements: INITIAL_DISBURSEMENTS });
@@ -281,33 +278,33 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6 text-slate-100">
+    <div className="bg-white border border-[#E7E2D7] rounded-3xl p-6 shadow-xl space-y-6 text-[#1C1917]">
       {/* Header Banner */}
-      <div className="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-[#E7E2D7]">
         <div>
           <div className="flex items-center space-x-2 mb-1">
-            <span className="text-xs font-mono bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full border border-emerald-500/30 font-bold flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-amber-400" />
+            <span className="text-xs font-mono bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-300 font-bold flex items-center gap-1">
+              <Flame className="w-3.5 h-3.5 text-[#C58B2B]" />
               <span>Differentiator #2 • Fellowship & Fund Pulse</span>
             </span>
           </div>
-          <h3 className="text-xl font-bold text-white">Fund Pulse & Fellowship Disbursement Management</h3>
-          <p className="text-xs text-slate-400">
+          <h3 className="font-display text-xl sm:text-2xl font-bold text-[#1C1917]">Fund Pulse & Fellowship Disbursement Management</h3>
+          <p className="text-xs text-stone-600 mt-0.5">
             Real-time burn-rate forecasting, fund exhaustion projections, and quarterly fellowship stipend releases.
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
           {/* Scheme Selector Pills */}
-          <div className="flex items-center space-x-2 bg-slate-950 p-1.5 rounded-xl border border-slate-800 text-xs font-semibold">
+          <div className="flex items-center space-x-1.5 bg-[#F0ECE1] p-1.5 rounded-2xl border border-[#E7E2D7] text-xs font-semibold">
             {schemes.map((s) => (
               <button
                 key={s.id}
                 onClick={() => setSelectedSchemeId(s.id)}
-                className={`px-3 py-1.5 rounded-lg transition-all ${
+                className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
                   selectedScheme?.id === s.id
-                    ? "bg-amber-500 text-slate-950 font-bold shadow"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-[#1E2B37] text-white font-bold shadow"
+                    : "text-stone-600 hover:text-stone-900"
                 }`}
               >
                 {s.code}
@@ -315,32 +312,31 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
             ))}
           </div>
 
-          {/* Requirement 3: Demo Tools Toggle (Gated behind dev mode) */}
           <button
             onClick={() => setShowDemoTools((prev) => !prev)}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition-all border ${
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition-all border cursor-pointer ${
               showDemoTools
-                ? "bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-md"
-                : "bg-slate-950 hover:bg-slate-800 text-slate-300 border-slate-800"
+                ? "bg-amber-100 text-amber-900 border-amber-300 shadow-sm"
+                : "bg-[#FAF8F3] hover:bg-[#F0ECE1] text-stone-700 border-[#E7E2D7]"
             }`}
             title="Toggle Demo & Test Injection Tools (off by default during live presentation)"
           >
-            <Wrench className="w-3.5 h-3.5 text-amber-400" />
+            <Wrench className="w-3.5 h-3.5 text-[#C58B2B]" />
             <span>{showDemoTools ? "Hide Demo Tools" : "Demo Tools"}</span>
           </button>
         </div>
       </div>
 
-      {/* Requirement 3: Collapsible Demo & Testing Sandbox Panel */}
+      {/* Demo Tools Sandbox Panel */}
       {showDemoTools && (
-        <div className="bg-amber-950/20 border border-amber-500/30 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 text-xs">
+        <div className="bg-amber-50 border border-amber-300 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4 text-xs">
           <div className="flex items-center space-x-2.5">
-            <div className="p-2 bg-amber-500/20 border border-amber-500/40 rounded-xl text-amber-400 shrink-0">
+            <div className="p-2 bg-amber-100 border border-amber-300 rounded-xl text-amber-800 shrink-0">
               <FlaskConical className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold text-amber-300">Demo & Testing Sandbox</span>
-              <p className="text-[11px] text-amber-200/70">
+              <span className="font-bold text-amber-900">Demo & Testing Sandbox</span>
+              <p className="text-[11px] text-amber-800/80">
                 Test risk alerts and simulation entry injection without affecting judge-facing default views.
               </p>
             </div>
@@ -350,18 +346,18 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
             <button
               onClick={handleSimulateHighBurnRate}
               title="Test the 'at risk of early exhaustion' alert by releasing a ₹31.5 Cr simulation payout"
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-3.5 py-2 rounded-xl text-xs flex items-center space-x-1.5 transition-all shadow"
+              className="bg-[#C58B2B] hover:bg-[#B37A20] text-white font-extrabold px-3.5 py-2 rounded-xl text-xs flex items-center space-x-1.5 transition-all cursor-pointer shadow-md"
             >
-              <Zap className="w-3.5 h-3.5 fill-slate-950" />
+              <Zap className="w-3.5 h-3.5 fill-white" />
               <span>Inject Test Risk Alert (Simulate High-Burn)</span>
             </button>
 
             <button
               onClick={handleResetData}
               title="Reset disbursements to clean initial baseline"
-              className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition-all"
+              className="bg-white hover:bg-stone-50 text-stone-700 border border-stone-300 px-3 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition-all cursor-pointer"
             >
-              <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
+              <RotateCcw className="w-3.5 h-3.5 text-stone-500" />
               <span>Reset Disbursements Only</span>
             </button>
           </div>
@@ -369,37 +365,37 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
       )}
 
       {/* KPI Cards Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
-        <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3.5 text-xs">
+        <div className="bg-[#FAF8F3] p-4.5 rounded-2xl border border-[#E7E2D7] space-y-1">
+          <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
             Total Scheme Corpus
           </span>
-          <div className="text-xl font-black text-amber-400 font-mono">
+          <div className="font-display text-2xl font-black text-[#C58B2B] font-mono">
             ₹{(selectedScheme.totalCorpus / 10000000).toFixed(1)} Cr
           </div>
-          <span className="text-[10px] text-slate-500">{selectedScheme.allocatedYears} Year Statutory Budget</span>
+          <span className="text-[10px] text-stone-500">{selectedScheme.allocatedYears} Year Statutory Budget</span>
         </div>
 
-        <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+        <div className="bg-[#FAF8F3] p-4.5 rounded-2xl border border-[#E7E2D7] space-y-1">
+          <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
             Current Year Allocation
           </span>
-          <div className="text-xl font-black text-slate-100 font-mono">
+          <div className="font-display text-2xl font-black text-[#1C1917] font-mono">
             ₹{(annualBudget / 10000000).toFixed(2)} Cr
           </div>
-          <span className="text-[10px] text-slate-400">FY26 Sanctioned</span>
+          <span className="text-[10px] text-stone-500">FY26 Sanctioned</span>
         </div>
 
-        <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+        <div className="bg-[#FAF8F3] p-4.5 rounded-2xl border border-[#E7E2D7] space-y-1">
+          <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
             Disbursed Stipends
           </span>
-          <div className="text-xl font-black text-emerald-400 font-mono">
+          <div className="font-display text-2xl font-black text-emerald-800 font-mono">
             ₹{(totalReleased / 100000).toFixed(2)} Lakhs
           </div>
           <span
             className={`text-[10px] font-semibold block ${
-              isOverAllocated ? "text-rose-400 font-bold animate-pulse" : "text-emerald-400"
+              isOverAllocated ? "text-rose-700 font-bold animate-pulse" : "text-emerald-700"
             }`}
           >
             {isOverAllocated
@@ -408,20 +404,20 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
           </span>
         </div>
 
-        <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-1">
-          <span className="text-slate-400 font-semibold block text-[10px] uppercase tracking-wider">
+        <div className="bg-[#FAF8F3] p-4.5 rounded-2xl border border-[#E7E2D7] space-y-1">
+          <span className="text-stone-500 font-semibold block text-[10px] uppercase tracking-wider">
             Burn Forecast Exhaustion
           </span>
           <div
-            className={`text-xl font-black font-mono ${
-              isAtRisk ? "text-rose-400" : "text-amber-300"
+            className={`font-display text-2xl font-black font-mono ${
+              isAtRisk ? "text-rose-700" : "text-[#C58B2B]"
             }`}
           >
             {forecastText}
           </div>
           <span
             className={`text-[10px] font-semibold block ${
-              isAtRisk ? "text-rose-400 font-bold animate-pulse" : "text-slate-400"
+              isAtRisk ? "text-rose-700 font-bold animate-pulse" : "text-stone-600"
             }`}
           >
             {forecastSubtext}
@@ -430,15 +426,15 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
       </div>
 
       {/* Burn Rate Visual Progress */}
-      <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-2">
+      <div className="bg-[#FAF8F3] p-5 rounded-2xl border border-[#E7E2D7] space-y-2">
         <div className="flex justify-between items-center text-xs font-bold">
-          <span className="text-slate-300">FY26 Budget Utilization Progress</span>
-          <span className={`font-mono ${isOverAllocated ? "text-rose-400 font-extrabold" : "text-amber-400"}`}>
+          <span className="text-stone-800">FY26 Budget Utilization Progress</span>
+          <span className={`font-mono ${isOverAllocated ? "text-rose-700 font-extrabold" : "text-[#C58B2B]"}`}>
             ₹{totalReleased.toLocaleString("en-IN")} / ₹{annualBudget.toLocaleString("en-IN")}
             {isOverAllocated && ` (⚠️ ${rawBurnRatePercent}% OVER)`}
           </span>
         </div>
-        <div className="h-4 bg-slate-900 rounded-full overflow-hidden p-0.5 border border-slate-800">
+        <div className="h-4 bg-[#F0ECE1] rounded-full overflow-hidden p-0.5 border border-[#E7E2D7]">
           {isOverAllocated ? (
             <div
               className="h-full bg-gradient-to-r from-rose-600 via-rose-500 to-red-400 rounded-full transition-all duration-700 animate-pulse border border-rose-400"
@@ -446,13 +442,13 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
             />
           ) : (
             <div
-              className="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-rose-500 rounded-full transition-all duration-700"
+              className="h-full bg-gradient-to-r from-emerald-600 via-amber-500 to-rose-500 rounded-full transition-all duration-700"
               style={{ width: `${Math.min(100, Math.max(5, rawBurnRatePercent))}%` }}
             />
           )}
         </div>
         {isOverAllocated && (
-          <div className="text-[10px] text-rose-400 font-semibold flex items-center gap-1 pt-1">
+          <div className="text-[10px] text-rose-700 font-semibold flex items-center gap-1 pt-1">
             <AlertCircle className="w-3.5 h-3.5" />
             <span>
               ⚠️ {rawBurnRatePercent}% Utilization — Over-allocated by ₹
@@ -463,56 +459,46 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
       </div>
 
       {/* Fellowship Disbursement Desk for Selected Candidates */}
-      <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+      <div className="bg-[#FAF8F3] p-5 sm:p-6 rounded-3xl border border-[#E7E2D7] space-y-4">
         <div className="flex flex-wrap justify-between items-center gap-3">
           <div>
-            <h4 className="font-bold text-sm text-white">
+            <h4 className="font-display font-bold text-base text-[#1C1917]">
               Selected Fellows & Quarterly Stipend Management ({displayedFellows.length})
             </h4>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-stone-600 mt-0.5">
               Release quarterly fellowship stipend directly to student PFMS accounts.
             </p>
           </div>
 
-          {/* Controls: Quarter Selector, Reset Disbursements Only */}
           <div className="flex items-center space-x-3 text-xs">
-            <div className="flex items-center space-x-1.5 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
-              <Calendar className="w-3.5 h-3.5 text-amber-400" />
+            <div className="flex items-center space-x-1.5 bg-white px-3.5 py-2 rounded-xl border border-[#E7E2D7] shadow-sm">
+              <Calendar className="w-3.5 h-3.5 text-[#C58B2B]" />
               <select
                 value={selectedQuarter}
                 onChange={(e) => setSelectedQuarter(e.target.value)}
-                className="bg-transparent text-slate-200 font-semibold focus:outline-none cursor-pointer"
+                className="bg-transparent text-stone-800 font-semibold focus:outline-none cursor-pointer"
               >
-                <option value="Q1 FY26 (Apr-Jun)" className="bg-slate-900">
-                  Q1 FY26 (Apr-Jun)
-                </option>
-                <option value="Q2 FY26 (Jul-Sep)" className="bg-slate-900">
-                  Q2 FY26 (Jul-Sep)
-                </option>
-                <option value="Q3 FY26 (Oct-Dec)" className="bg-slate-900">
-                  Q3 FY26 (Oct-Dec)
-                </option>
-                <option value="Q4 FY26 (Jan-Mar)" className="bg-slate-900">
-                  Q4 FY26 (Jan-Mar)
-                </option>
+                <option value="Q1 FY26 (Apr-Jun)">Q1 FY26 (Apr-Jun)</option>
+                <option value="Q2 FY26 (Jul-Sep)">Q2 FY26 (Jul-Sep)</option>
+                <option value="Q3 FY26 (Oct-Dec)">Q3 FY26 (Oct-Dec)</option>
+                <option value="Q4 FY26 (Jan-Mar)">Q4 FY26 (Jan-Mar)</option>
               </select>
             </div>
 
-            {/* Requirement 4: Explicit label clarifying scope */}
             <button
               onClick={handleResetData}
               title="Reset Fund Pulse disbursements back to clean initial baseline"
-              className="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 px-3 py-1.5 rounded-xl text-[11px] font-semibold flex items-center space-x-1.5 transition-all"
+              className="bg-white hover:bg-stone-50 text-stone-700 border border-[#E7E2D7] px-3.5 py-2 rounded-xl text-[11px] font-semibold flex items-center space-x-1.5 transition-all cursor-pointer shadow-sm"
             >
-              <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
+              <RotateCcw className="w-3.5 h-3.5 text-stone-500" />
               <span>Reset Disbursements Only</span>
             </button>
           </div>
         </div>
 
-        <div className="divide-y divide-slate-800 max-h-[360px] overflow-y-auto pr-1">
+        <div className="divide-y divide-[#E7E2D7] max-h-[380px] overflow-y-auto pr-1">
           {displayedFellows.length === 0 ? (
-            <div className="py-6 text-center text-xs text-slate-500">
+            <div className="py-6 text-center text-xs text-stone-500">
               No selected fellows pending disbursement for {selectedScheme.code}.
             </div>
           ) : (
@@ -529,7 +515,6 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
               const fellowTotalReceived = fellowDisbs.reduce((acc, d) => acc + d.amountReleased, 0);
               const isPaidForSelectedQuarter = fellowDisbs.some((d) => d.quarter === selectedQuarter);
 
-              // Requirement 1: Ensure name is unambiguous
               const displayName =
                 isSim && (fellow.studentName.toLowerCase().includes("birsa") || !fellow.studentName.startsWith("[SIMULATION]"))
                   ? "[SIMULATION] High-Burn Test Fellow"
@@ -538,54 +523,53 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
               return (
                 <div
                   key={fellow.id}
-                  className={`py-3 px-3.5 rounded-2xl flex flex-wrap justify-between items-center text-xs gap-3 my-1.5 transition-all ${
+                  className={`py-3.5 px-4 rounded-2xl flex flex-wrap justify-between items-center text-xs gap-3 my-1.5 transition-all ${
                     isSim
-                      ? "bg-amber-950/25 border border-dashed border-amber-500/50 shadow-inner"
-                      : "bg-slate-900/40 border border-slate-800/80 hover:border-slate-700"
+                      ? "bg-amber-100/80 border border-dashed border-amber-600/70 text-amber-900 shadow-sm"
+                      : "bg-white border border-[#E7E2D7] hover:border-stone-400 text-[#1C1917]"
                   }`}
                 >
                   <div>
                     <div className="font-bold text-sm flex items-center gap-2">
-                      <span className={isSim ? "text-amber-300 font-extrabold" : "text-slate-200"}>
+                      <span className={isSim ? "text-amber-950 font-extrabold" : "text-stone-900"}>
                         {displayName}
                       </span>
-                      {/* Requirement 2: Prominent SIMULATED DATA badge */}
                       {isSim && (
-                        <span className="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded-full font-black tracking-wider flex items-center gap-1">
-                          <AlertCircle className="w-3 h-3 text-amber-400" />
+                        <span className="text-[10px] bg-amber-200/90 text-amber-950 border border-amber-400 px-2.5 py-0.5 rounded-full font-black tracking-wider flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3 text-amber-800" />
                           SIMULATED DATA
                         </span>
                       )}
                     </div>
-                    <div className={`font-mono text-[11px] ${isSim ? "text-amber-400/80" : "text-slate-400"}`}>
+                    <div className={`font-mono text-[11px] ${isSim ? "text-amber-800" : "text-stone-500"}`}>
                       App #: {fellow.applicationNumber} • {fellow.institute}
                     </div>
                   </div>
 
                   <div className="flex items-center space-x-3">
                     <div className="text-right">
-                      <div className={`font-bold font-mono ${isSim ? "text-amber-400" : "text-emerald-400"}`}>
+                      <div className={`font-bold font-mono text-sm ${isSim ? "text-amber-900" : "text-emerald-800"}`}>
                         ₹{fellowTotalReceived.toLocaleString("en-IN")}
                       </div>
-                      <div className="text-[10px] text-slate-500">{quartersPaidCount} Quarters Paid</div>
+                      <div className="text-[10px] text-stone-500">{quartersPaidCount} Quarters Paid</div>
                     </div>
 
                     {isPaidForSelectedQuarter ? (
                       <button
                         disabled
-                        className="bg-slate-800 text-emerald-400 border border-slate-700 font-bold px-3.5 py-1.5 rounded-xl text-xs flex items-center space-x-1 shadow-sm cursor-not-allowed opacity-90"
+                        className="bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold px-3.5 py-2 rounded-xl text-xs flex items-center space-x-1 shadow-sm cursor-not-allowed opacity-90"
                       >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
                         <span>Paid ({selectedQuarter.split(" ")[0]})</span>
                       </button>
                     ) : (
                       <button
                         disabled={isReleasingId === fellow.id}
                         onClick={() => handleReleaseStipend(fellow)}
-                        className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3.5 py-1.5 rounded-xl text-xs flex items-center space-x-1 shadow-sm transition-all disabled:opacity-50"
+                        className="bg-[#1E2B37] hover:bg-[#2C3B4E] text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center space-x-1 shadow-md transition-all disabled:opacity-50 cursor-pointer"
                       >
                         {isReleasingId === fellow.id ? (
-                          <div className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
+                          <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                         ) : (
                           <>
                             <Send className="w-3.5 h-3.5" />
@@ -604,5 +588,7 @@ export const FundPulse: React.FC<FundPulseProps> = ({ schemes, disbursements, ap
     </div>
   );
 };
+
+
 
 

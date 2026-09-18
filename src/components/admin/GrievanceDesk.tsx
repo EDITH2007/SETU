@@ -20,27 +20,27 @@ export const GrievanceDesk: React.FC = () => {
   };
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-6 text-slate-100">
+    <div className="bg-white border border-[#E7E2D7] rounded-3xl p-6 sm:p-8 shadow-xl space-y-6 text-[#1C1917]">
       {/* Header */}
-      <div className="flex flex-wrap justify-between items-center gap-4 pb-4 border-b border-slate-800">
+      <div className="flex flex-wrap justify-between items-center gap-4 pb-5 border-b border-[#E7E2D7]">
         <div>
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-amber-400" />
+          <h3 className="text-2xl sm:text-3xl font-display font-medium text-[#1C1917] flex items-center gap-3 tracking-tight">
+            <HelpCircle className="w-6 h-6 text-[#C58B2B]" />
             <span>Grievance SLA Escalation Desk</span>
-            <span className="text-xs bg-rose-500/20 text-rose-300 font-mono px-2.5 py-0.5 rounded-full border border-rose-500/30 font-bold">
+            <span className="text-xs bg-rose-50 text-rose-900 font-mono px-3 py-1 rounded-full border border-rose-300 font-semibold">
               7-Day Guaranteed SLA
             </span>
           </h3>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs sm:text-sm text-stone-600 mt-1">
             Automated scheduled SLA monitor auto-escalates unhandled student grievances from Nodal Officer to Joint Secretary.
           </p>
         </div>
       </div>
 
       {/* Grievances Master Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {grievances.length === 0 ? (
-          <div className="md:col-span-2 p-8 text-center text-xs text-slate-500 bg-slate-950 rounded-2xl border border-slate-800">
+          <div className="md:col-span-2 p-10 text-center text-xs text-stone-500 bg-[#FAF8F3] rounded-2xl border border-[#E7E2D7]">
             No active grievances registered.
           </div>
         ) : (
@@ -54,29 +54,29 @@ export const GrievanceDesk: React.FC = () => {
             return (
               <div
                 key={g.id}
-                className={`p-5 rounded-2xl border transition-all space-y-3 relative ${
+                className={`p-6 rounded-2xl border transition-all duration-200 space-y-4 relative ${
                   isResolved
-                    ? "bg-slate-950 border-emerald-900/60 opacity-80"
+                    ? "bg-[#FAF8F3] border-emerald-300 opacity-90"
                     : isBreached
-                    ? "bg-rose-950/30 border-rose-800 shadow-xl shadow-rose-950/20"
-                    : "bg-slate-950 border-slate-800"
+                    ? "bg-rose-50/80 border-rose-300 shadow-sm"
+                    : "bg-[#FAF8F3] border-[#E7E2D7] hover:border-stone-400"
                 }`}
               >
                 {/* Header Row */}
-                <div className="flex justify-between items-start">
+                <div className="flex justify-between items-start gap-2">
                   <div>
-                    <span className="text-[10px] font-mono text-amber-300 font-bold">{g.applicationNumber}</span>
-                    <h4 className="font-bold text-sm text-slate-200 mt-0.5">{g.studentName}</h4>
+                    <span className="text-[10px] font-mono text-[#C58B2B] font-bold tracking-wider">{g.applicationNumber}</span>
+                    <h4 className="font-display font-semibold text-base text-stone-900 mt-0.5">{g.studentName}</h4>
                   </div>
 
                   {/* Escalation Level Badge */}
                   <span
-                    className={`text-[10px] font-bold px-2.5 py-1 rounded-full border font-mono ${
+                    className={`text-[10px] font-bold px-3 py-1 rounded-full border font-mono tracking-wide ${
                       g.escalationLevel === 3
-                        ? "bg-rose-600 text-slate-950 border-rose-400 font-black animate-bounce"
+                        ? "bg-rose-600 text-white border-rose-700 font-extrabold animate-pulse"
                         : g.escalationLevel === 2
-                        ? "bg-amber-500 text-slate-950 border-amber-400 font-black"
-                        : "bg-blue-500/20 text-blue-300 border-blue-500/40"
+                        ? "bg-amber-600 text-white border-amber-700 font-bold"
+                        : "bg-indigo-50 text-indigo-900 border-indigo-200"
                     }`}
                   >
                     Level {g.escalationLevel}:{" "}
@@ -88,30 +88,30 @@ export const GrievanceDesk: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-xs space-y-1">
-                  <div className="font-bold text-slate-200">{g.subject}</div>
-                  <p className="text-slate-400 text-[11px] leading-relaxed">{g.description}</p>
+                <div className="bg-white p-3.5 rounded-xl border border-[#E7E2D7] text-xs space-y-1">
+                  <div className="font-semibold text-stone-900">{g.subject}</div>
+                  <p className="text-stone-600 text-xs leading-relaxed">{g.description}</p>
                 </div>
 
                 {/* SLA Status Pill */}
-                <div className="flex justify-between items-center text-xs pt-2 border-t border-slate-800/80">
+                <div className="flex justify-between items-center text-xs pt-2 border-t border-[#E7E2D7]">
                   <div className="flex items-center space-x-1.5 font-mono">
-                    <Clock className="w-3.5 h-3.5 text-amber-400" />
+                    <Clock className="w-3.5 h-3.5 text-[#C58B2B]" />
                     {isResolved ? (
-                      <span className="text-emerald-400 font-bold">Resolved</span>
+                      <span className="text-emerald-800 font-semibold">Resolved</span>
                     ) : isBreached ? (
-                      <span className="text-rose-400 font-bold flex items-center gap-1">
-                        <AlertCircle className="w-3.5 h-3.5" /> SLA Breached by {diffDays}d
+                      <span className="text-rose-700 font-semibold flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5 text-rose-600" /> SLA Breached by {diffDays}d
                       </span>
                     ) : (
-                      <span className="text-amber-300 font-bold">{diffDays} Days SLA Remaining</span>
+                      <span className="text-[#C58B2B] font-semibold">{diffDays} Days SLA Remaining</span>
                     )}
                   </div>
 
                   {!isResolved && (
                     <button
                       onClick={() => setSelectedGrievance(g)}
-                      className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-3 py-1 rounded-lg text-xs flex items-center space-x-1"
+                      className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-3.5 py-1.5 rounded-xl text-xs flex items-center space-x-1.5 shadow-md transition-all transform active:scale-95"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Resolve</span>
@@ -120,8 +120,8 @@ export const GrievanceDesk: React.FC = () => {
                 </div>
 
                 {g.resolutionNotes && (
-                  <div className="text-[11px] text-emerald-300 bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-900/60">
-                    <strong>Resolution Notes:</strong> {g.resolutionNotes}
+                  <div className="text-[11px] text-emerald-900 bg-emerald-50 p-3 rounded-xl border border-emerald-300">
+                    <strong className="text-emerald-950">Resolution Notes:</strong> {g.resolutionNotes}
                   </div>
                 )}
               </div>
@@ -132,51 +132,51 @@ export const GrievanceDesk: React.FC = () => {
 
       {/* Resolution Modal */}
       {selectedGrievance && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 text-slate-100">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <button onClick={() => setSelectedGrievance(null)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
+        <div className="fixed inset-0 bg-stone-900/60 backdrop-blur-md flex items-center justify-center p-4 z-50 text-[#1C1917]">
+          <div className="bg-white border border-[#E7E2D7] rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onClick={() => setSelectedGrievance(null)} className="absolute top-6 right-6 text-stone-400 hover:text-stone-800 transition-colors">
               <X className="w-5 h-5" />
             </button>
 
-            <h3 className="font-bold text-lg text-white mb-2 flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <h3 className="font-display font-semibold text-xl text-[#1C1917] mb-4 flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-emerald-700" />
               <span>Resolve Student Grievance</span>
             </h3>
 
             <form onSubmit={handleResolve} className="space-y-4 text-xs">
               <div>
-                <label className="block font-semibold mb-1 text-slate-300">Grievance Subject</label>
+                <label className="block font-medium mb-1.5 text-stone-700">Grievance Subject</label>
                 <input
                   type="text"
                   disabled
                   value={selectedGrievance.subject}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-400"
+                  className="w-full bg-[#FAF8F3] border border-[#E7E2D7] rounded-xl px-3.5 py-2.5 text-stone-600 cursor-not-allowed"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold mb-1 text-slate-300">Official Resolution Action & Notes *</label>
+                <label className="block font-medium mb-1.5 text-stone-700">Official Resolution Action &amp; Notes *</label>
                 <textarea
                   required
                   rows={4}
                   placeholder="State resolution details (e.g., Application document scrutiny cleared at State office)..."
                   value={resolutionNotes}
                   onChange={(e) => setResolutionNotes(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:outline-none focus:border-amber-500"
+                  className="w-full bg-[#FAF8F3] border border-[#E7E2D7] rounded-xl px-3.5 py-2.5 text-stone-900 focus:outline-none focus:border-[#C58B2B]"
                 />
               </div>
 
-              <div className="flex justify-end space-x-2 pt-2">
+              <div className="flex justify-end space-x-3 pt-3 border-t border-[#E7E2D7]">
                 <button
                   type="button"
                   onClick={() => setSelectedGrievance(null)}
-                  className="bg-slate-800 text-slate-300 font-bold px-4 py-2 rounded-lg"
+                  className="bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold px-4 py-2.5 rounded-xl transition-colors border border-stone-300"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold px-5 py-2 rounded-lg flex items-center space-x-1"
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-5 py-2.5 rounded-xl flex items-center space-x-1.5 shadow-md transition-all transform active:scale-95"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>Submit Resolution</span>
@@ -189,3 +189,4 @@ export const GrievanceDesk: React.FC = () => {
     </div>
   );
 };
+

@@ -30,24 +30,24 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
   );
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl text-slate-100">
-      <div className="flex flex-wrap justify-between items-center mb-6 pb-3 border-b border-slate-800 gap-2">
+    <div className="bg-white border border-[#E7E2D7] rounded-3xl p-5 sm:p-6 shadow-md text-stone-900">
+      <div className="flex flex-wrap justify-between items-center mb-6 pb-4 border-b border-stone-200 gap-2">
         <div>
-          <h3 className="font-bold text-base text-white flex items-center gap-2">
+          <h3 className="font-display font-bold text-base text-stone-900 flex items-center gap-2">
             <span>Official Application Lifecycle Timeline</span>
-            <span className="text-xs bg-amber-500/20 text-amber-300 font-mono px-2 py-0.5 rounded border border-amber-500/30">
+            <span className="text-xs bg-amber-50 text-amber-900 font-mono px-2.5 py-0.5 rounded-full border border-amber-300 font-semibold">
               7 Official Stages
             </span>
           </h3>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-stone-600">
             Real-time stage dwell tracking & statutory transparency audit.
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
-          <Clock className="w-4 h-4 text-amber-400" />
-          <span className="text-xs text-slate-300">
-            Current Stage Dwell: <strong className="text-amber-300 font-mono">{daysInCurrentStage} Days</strong>
+        <div className="flex items-center space-x-2 bg-[#FAF8F5] px-3.5 py-1.5 rounded-xl border border-stone-200">
+          <Clock className="w-4 h-4 text-[#C58B2B]" />
+          <span className="text-xs text-stone-700">
+            Current Stage Dwell: <strong className="text-[#C58B2B] font-mono">{daysInCurrentStage} Days</strong>
           </span>
         </div>
       </div>
@@ -67,12 +67,12 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
             return (
               <div
                 key={stage.id}
-                className={`relative p-3 rounded-xl border transition-all flex flex-col justify-between ${
+                className={`relative p-3.5 rounded-2xl border transition-all flex flex-col justify-between ${
                   isCurrent
-                    ? "bg-amber-500/10 border-amber-500 shadow-lg shadow-amber-500/10 ring-1 ring-amber-500/50"
+                    ? "bg-amber-50/90 border-[#C58B2B] shadow-sm ring-1 ring-[#C58B2B]/40"
                     : isPassed
-                    ? "bg-slate-950 border-emerald-800/60 text-slate-300"
-                    : "bg-slate-950/40 border-slate-800/80 text-slate-500"
+                    ? "bg-emerald-50/60 border-emerald-300 text-stone-800"
+                    : "bg-stone-50 border-stone-200 text-stone-400"
                 }`}
               >
                 {/* Stage Header & Icon */}
@@ -80,10 +80,10 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
                   <div
                     className={`w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs ${
                       isPassed
-                        ? "bg-emerald-500 text-slate-950"
+                        ? "bg-emerald-700 text-white"
                         : isCurrent
-                        ? "bg-amber-500 text-slate-950 font-black animate-pulse"
-                        : "bg-slate-800 text-slate-400"
+                        ? "bg-[#1E2B37] text-white font-black animate-pulse"
+                        : "bg-stone-200 text-stone-500"
                     }`}
                   >
                     {isPassed ? <Check className="w-4 h-4 stroke-[3]" /> : idx + 1}
@@ -91,12 +91,12 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
 
                   {/* Days Badge */}
                   <span
-                    className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-bold ${
+                    className={`text-[10px] font-mono px-2 py-0.5 rounded-md font-bold ${
                       isDelayed
-                        ? "bg-rose-500/20 text-rose-300 border border-rose-500/40"
+                        ? "bg-rose-100 text-rose-900 border border-rose-300"
                         : isCurrent
-                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                        : "bg-slate-800/80 text-slate-400"
+                        ? "bg-amber-100 text-amber-900 border border-amber-300"
+                        : "bg-stone-100 text-stone-500"
                     }`}
                   >
                     {dwellDays}d
@@ -107,18 +107,18 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
                 <div>
                   <div
                     className={`font-bold text-xs leading-tight mb-0.5 ${
-                      isCurrent ? "text-amber-300" : isPassed ? "text-slate-200" : "text-slate-400"
+                      isCurrent ? "text-stone-900" : isPassed ? "text-stone-800" : "text-stone-500"
                     }`}
                   >
                     {stage.label}
                   </div>
-                  <div className="text-[10px] text-slate-400 font-hindi leading-tight">{stage.hindi}</div>
+                  <div className="text-[10px] text-stone-500 font-hindi leading-tight">{stage.hindi}</div>
                 </div>
 
                 {/* Delay Warning if applicable */}
                 {isDelayed && (
-                  <div className="mt-2 flex items-center space-x-1 text-[10px] text-rose-400 font-semibold bg-rose-950/40 p-1 rounded">
-                    <AlertTriangle className="w-3 h-3 flex-shrink-0" />
+                  <div className="mt-2 flex items-center space-x-1 text-[10px] text-rose-800 font-semibold bg-rose-50 p-1 rounded-lg border border-rose-200">
+                    <AlertTriangle className="w-3 h-3 flex-shrink-0 text-rose-600" />
                     <span className="truncate">Bottleneck</span>
                   </div>
                 )}
@@ -130,3 +130,4 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
     </div>
   );
 };
+
