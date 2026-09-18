@@ -195,15 +195,15 @@ export const Header: React.FC = () => {
           {/* Reset Demo Data Button */}
           <button
             onClick={() => {
-              if (confirm("Reset SETU database to default seed state (~40 applications)?")) {
+              if (confirm("Reset entire SETU platform database to default seed state (~40 applications, schemes, grievances, & baseline disbursements)?")) {
                 resetToSeedData();
               }
             }}
             className="p-2 rounded-xl bg-[#1A3A6D] border border-blue-800 hover:bg-rose-900/60 hover:border-rose-700 text-slate-300 hover:text-rose-200 transition-all flex items-center space-x-1 text-xs"
-            title="Reset Demo Dataset"
+            title="Reset all platform data (applications, schemes, grievances, and disbursements)"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span className="hidden xl:inline text-[11px]">Reset Data</span>
+            <span className="hidden xl:inline text-[11px]">Reset All Data</span>
           </button>
         </div>
       </div>

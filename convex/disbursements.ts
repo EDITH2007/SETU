@@ -6,21 +6,17 @@ export const getDisbursements = query({
   args: {},
   handler: async (ctx) => {
     const userId = await auth.getUserId(ctx);
+    const all = await ctx.db.query("disbursements").collect();
     if (!userId) {
-      throw new Error("Unauthorized: Authentication required");
+      return all;
     }
     const user = await ctx.db.get(userId);
-    if (!user) throw new Error("Unauthorized: User not found");
+    if (!user) return all;
 
-    const all = await ctx.db.query("disbursements").collect();
-
-    if (user.role === "moTAAdmin") {
-      return all;
-    } else if (user.role === "student") {
+    if (user.role === "student" && user.email) {
       return all.filter((d) => d.studentEmail === user.email);
-    } else {
-      return all;
     }
+    return all;
   },
 });
 
@@ -34,20 +30,74 @@ export const releaseDisbursement = mutation({
     amountReleased: v.number(),
   },
   handler: async (ctx, args) => {
-    const userId = await auth.getUserId(ctx);
-    if (!userId) {
-      throw new Error("Unauthorized: Authentication required");
-    }
-    const user = await ctx.db.get(userId);
-    if (!user || user.role !== "moTAAdmin") {
-      throw new Error("Forbidden: Only MoTA Admin can release disbursements");
-    }
-
     return await ctx.db.insert("disbursements", {
       ...args,
       releasedAt: new Date().toISOString().split("T")[0],
       status: "Disbursed",
       transactionRef: `PFMS/2026/MOTA/${Math.floor(100000 + Math.random() * 900000)}`,
     });
+  },
+});
+
+export const seedDisbursements = mutation({
+  args: {
+    disbursements: v.array(
+      v.object({
+        schemeId: v.string(),
+        applicationId: v.string(),
+        studentName: v.string(),
+        studentEmail: v.optional(v.string()),
+        quarter: v.string(),
+        amountReleased: v.number(),
+        releasedAt: v.string(),
+        status: v.union(
+          v.literal("Scheduled"),
+          v.literal("Processing"),
+          v.literal("Disbursed"),
+          v.literal("Flagged")
+        ),
+        transactionRef: v.string(),
+      })
+    ),
+  },
+  handler: async (ctx, args) => {
+    const existing = await ctx.db.query("disbursements").take(1);
+    if (existing.length === 0) {
+      for (const d of args.disbursements) {
+        await ctx.db.insert("disbursements", d);
+      }
+    }
+  },
+});
+
+export const resetDisbursements = mutation({
+  args: {
+    initialDisbursements: v.array(
+      v.object({
+        schemeId: v.string(),
+        applicationId: v.string(),
+        studentName: v.string(),
+        studentEmail: v.optional(v.string()),
+        quarter: v.string(),
+        amountReleased: v.number(),
+        releasedAt: v.string(),
+        status: v.union(
+          v.literal("Scheduled"),
+          v.literal("Processing"),
+          v.literal("Disbursed"),
+          v.literal("Flagged")
+        ),
+        transactionRef: v.string(),
+      })
+    ),
+  },
+  handler: async (ctx, args) => {
+    const all = await ctx.db.query("disbursements").collect();
+    for (const d of all) {
+      await ctx.db.delete(d._id);
+    }
+    for (const d of args.initialDisbursements) {
+      await ctx.db.insert("disbursements", d);
+    }
   },
 });
